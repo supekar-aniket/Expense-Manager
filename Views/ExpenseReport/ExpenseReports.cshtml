@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ExpenseManager.Models.Expense>
+
+@{
+    ViewData["Title"] = "Expense Reports";
+    bool isAdmin = User.IsInRole("Admin");
+}
+
+<h2>📊 Expense Reports</h2>
+
+<form method="get" class="row g-3 align-items-center mb-3">
+
+    @* ✅ Only show username search if Admin *@
+    @if (isAdmin)
+    {
+        <div class="col-md-2">
+            <input type="text" name="userName" placeholder="Search by Username"
+                   class="form-control" value="@Context.Request.Query["userName"]" />
+        </div>
+    }
+
+    <div class="col-md-2">
+        <select name="categoryId" class="form-control" asp-items="ViewBag.Categories">
+            <option value="">-- All Categories --</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <input type="date" name="startDate" class="form-control"
+               value="@Context.Request.Query["startDate"]" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="endDate" class="form-control"
+               value="@Context.Request.Query["endDate"]" />
+    </div>
+
+    <div class="col-md-4 d-flex align-items-center gap-2">
+        <button type="submit" class="btn btn-outline-primary col-md-4">Filter</button>
+        <a asp-action="ExpenseReports" class="btn btn-outline-secondary col-md-4">Reset</a>
+        <button type="submit" formaction="/ExpenseReport/ExportPdf"
+                class="btn btn-outline-danger col-md-4">
+            Export PDF
+        </button>
+    </div>
+
+</form>
+
+@{
+    int sn = 1; // this is for Serial No.
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Sr. No.</th>
+            <th>Date</th>
+            <th>Item</th>
+            <th>Amount</th>
+            <th>Category</th>
+
+            @* ✅ Only show User column if Admin *@
+            @if (isAdmin)
+            {
+                <th>User</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exp in Model)
+        {
+            <tr>
+                <td class="text-center">@sn</td>
+                <td>@exp.DateAndTime.ToShortDateString()</td>
+                <td>@exp.ItemName</td>
+                <td>₹@exp.Amount</td>
+                <td>@exp.Category?.Name</td>
+
+                @* ✅ Only show User column if Admin *@
+                @if (isAdmin)
+                {
+                    <td>@exp.User?.UserName</td>
+                }
+            </tr>
+            sn++; // increment for continuous order
+        }
+    </tbody>
+</table>

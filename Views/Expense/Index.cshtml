@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ExpenseManager.Models.Expense>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-outline-primary btn-sm" asp-action="Create">Create New</a>
+    <a class="btn btn-outline-danger btn-sm" asp-action="ExpenseReports" asp-controller="ExpenseReport">Report</a>
+</p>
+
+@{
+    int sn = 1; // this is for Serial No.
+}
+
+<table class="table table-hover table-bordered table-striped">
+    <thead class="text-center">
+        <tr>
+            <th>Sr. No.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th colspan="3">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-center">@sn</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td class="text-center">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </td>
+            <td class="text-center">
+                <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+            </td>
+            <td class="text-center">
+                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        sn++; // increment for continuous order
+}
+    </tbody>
+</table>

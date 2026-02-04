@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ExpenseManager.Models.Expense>
+
+@{
+    ViewData["Title"] = "Manage All Expenses";
+}
+
+<h2 class="mb-3 text-center">Admin Expense Manager</h2>
+
+<!-- Filters -->
+<form method="get" class="row g-3 mb-3">
+
+    <!-- ✅ Search by Username -->
+    <div class="col-md-2">
+        <input type="text" name="userName" class="form-control" 
+               placeholder="Search by Username" value="@Context.Request.Query["userName"]" />
+    </div>
+
+    <!-- Category Filter -->
+    <div class="col-md-2">
+        <select name="categoryId" class="form-select" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name", Context.Request.Query["categoryId"]))">
+            <option value="">-- All Categories --</option>
+        </select>
+    </div>
+
+    <!-- Date Filters -->
+    <div class="col-md-2">
+        <input type="date" name="startDate" class="form-control" 
+               value="@Context.Request.Query["startDate"]" />
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="endDate" class="form-control" 
+               value="@Context.Request.Query["endDate"]" />
+    </div>
+
+    <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-outline-primary w-100 col-md-2">Filter</button>
+        <a href="@Url.Action("Index", "AdminExpense")" class="btn btn-outline-secondary w-100 col-md-2">Reset</a>
+    </div>
+
+</form>
+
+@{
+    int sn = 1; // this is for Serial No.
+}
+
+<partial name="_ErrorMessages" /> <!-- ✅ Include Error Messages Here -->
+
+<!-- Expense Table -->
+<table class="table table-hover table-bordered">
+    <thead class="table-secondary text-center">
+        <tr>
+            <th>SR.No</th>
+            <th>Date</th>
+            <th>Item</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>User</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expense in Model)
+        {
+            <tr>
+                <td class="text-center">@sn</td>
+                <td>@expense.ItemName</td>
+                <td>@expense.DateAndTime.ToString("dd-MMM-yyyy")</td>
+                <td>₹@expense.Amount</td>
+                <td>@expense.Category.Name</td>
+                <td>@expense.User.UserName</td>
+                <td class="d-flex justify-content-center gap-2">
+                    <a asp-action="Edit" asp-route-id="@expense.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@expense.Id" class="btn btn-sm btn-outline-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@expense.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            sn++; // increment for continuous order
+        }
+    </tbody>
+</table>
+
+

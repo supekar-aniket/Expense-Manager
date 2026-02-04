@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ExpenseManager.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<partial name="_ErrorMessages" /> <!-- ✅ Include Error Messages Here -->
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary btn-sm">Create New</a>
+</p>
+@{
+    int sn = 1; // this is for Serial No.
+}
+<table class="table table-bordered table-hover table-striped">
+    <thead class="text-center">
+        <tr>
+            <th>Sr. No.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th colspan="2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-center">@sn</td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="text-center">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </td>
+            <td class="text-center">
+                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        sn++; // increment for continuous order
+}
+    </tbody>
+</table>

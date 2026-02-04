@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+@* <h1 class="mb-4 text-center">Admin Dashboard</h1> *@
+
+<partial name="_ErrorMessages" /> <!-- ✅ Include Error Messages Here -->
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left Column: Stats & Recent Activity -->
+        <div class="col-md-5 mb-4">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">Total Users</h6>
+                            <p class="card-text h4">@ViewBag.TotalUsers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">Total Expenses</h6>
+                            <p class="card-text h4">@ViewBag.TotalExpenses</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">Total Categories</h6>
+                            <p class="card-text h4">@ViewBag.TotalCategories</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Recent Activity</h6>
+                            <ul class="list-group list-group-flush small">
+                                @foreach (var item in ViewBag.RecentActivities as List<string>)
+                                {
+                                    <li class="list-group-item">@item</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Quick Actions -->
+        <div class="col-md-7 d-flex flex-column gap-3">
+            <h3 class="mb-3 text-center">Quick Actions</h3>
+            <a href="@Url.Action("Index", "User")" class="btn btn-primary btn-lg">Manage Users</a>
+            <a href="@Url.Action("Index", "AdminExpense")" class="btn btn-success btn-lg">Manage Expenses</a>
+            <a href="@Url.Action("Index", "Category")" class="btn btn-warning btn-lg">View Categories</a>
+
+            <!-- New Features -->
+            <a href="@Url.Action("ExpenseReports", "ExpenseReport")" class="btn btn-info btn-lg">📊 Expense Reports</a>
+        </div>
+    </div>
+</div>
