@@ -1,5 +1,6 @@
-﻿using System.Net;
-using System.Net.Mail;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 
 namespace ExpenseManager.Helper
 {
@@ -12,38 +13,33 @@ namespace ExpenseManager.Helper
             _config = configuration;
         }
 
-        public bool SendEmail(string? email, string? subject, string? body)
+        public async Task<bool> SendEmailAsync(string? email, string? subject, string? body)
         {
-            // Creating objects
-            MailMessage message = new MailMessage();
-            SmtpClient smtpClient = new SmtpClient();
-
-            // Adding information to MailMessage object
-            message.From = new MailAddress(_config["EmailSettings:FromEmail"]);
-            message.To.Add(email);
+            var message = new MimeMessage();
+            message.From.Add(MailboxAddress.Parse(_config["EmailSettings:FromEmail"]));
+            message.To.Add(MailboxAddress.Parse(email));
             message.Subject = subject;
-            message.IsBodyHtml = true;
-            message.Body = body;
 
-            // Adding SMTP object information
-            smtpClient.Port = 587;
-            smtpClient.Host = "smtp.gmail.com";
-            smtpClient.EnableSsl = true;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential(
-                            _config["EmailSettings:FromEmail"],
-                            _config["EmailSettings:AppPassword"]
-                        );
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            message.Body = new TextPart("html")
+            {
+                Text = body
+            };
 
-            // Sending Email
             try
             {
-                smtpClient.Send(message);
-                return true;
+                using var smtp = new SmtpClient();
+                await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(
+                    _config["EmailSettings:FromEmail"],
+                    _config["EmailSettings:AppPassword"]
+                );
 
+                await smtp.SendAsync(message);
+                await smtp.DisconnectAsync(true);
+
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }

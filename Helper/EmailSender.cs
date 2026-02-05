@@ -6,16 +6,14 @@ namespace ExpenseManager.Helper
     {
         private readonly EmailHelper _emailHelper;
 
-        public EmailSender(IConfiguration config)
+        public EmailSender(EmailHelper emailHelper)
         {
-            _emailHelper = new EmailHelper(config);
+            _emailHelper = emailHelper;
         }
 
-        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            _emailHelper.SendEmail(email, subject, htmlMessage);
-
-            return Task.CompletedTask;
+            await _emailHelper.SendEmailAsync(email, subject, htmlMessage);
         }
     }
 }

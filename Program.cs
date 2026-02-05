@@ -22,6 +22,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddControllersWithViews();
 
 // Register EmailSender for IEmailSender
+builder.Services.AddTransient<EmailHelper>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // UrlHelper for sendEmail
