@@ -22,14 +22,20 @@ Expense Manager is a full-stack web application designed to help users track and
 
 ## Screenshots
 
-### Admin Dashboard
-![Dashboard](./screenshots/dashboard.png)
+### Home Page
+![HomePage](./screenshots/homepage.png)
 
 ### Login Page
-![Login](./screenshots/login.png)
+![LoginPage](./screenshots/loginpage.png)
 
-### Expense List
-![Expenses](./screenshots/expenses.png)
+### Admin Dashboard
+![AdminDashboard](.screenshots/admindashboard.png)
+
+### User Dashboard
+![UserDashboard](.screenshots/userdashboard.png)
+
+### Expense Report
+![ExpenseReport](./screenshots/expensereport.png)
 
 ## How to Run
 
