@@ -1,145 +1,62 @@
-# Expense Manager
+# Expense Manager (ASP.NET Core)
 
-A full-stack web application built with ASP.NET Core MVC for tracking and managing personal expenses by category. The application supports role-based access (Admin and User), email verification, PDF export, and secure authentication using ASP.NET Core Identity.
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Framework | ASP.NET Core MVC (.NET 8) |
-| Database | SQL Server (via EF Core) |
-| ORM | Entity Framework Core 9 |
-| Authentication | ASP.NET Core Identity |
-| Email Service | MailKit + SendGrid |
-| PDF Generation | iTextSharp |
-| Frontend | Bootstrap 5.3, Razor Views |
-
----
+## Overview
+Expense Manager is a full-stack web application designed to help users track and manage personal or business expenses efficiently. It provides secure authentication, structured expense tracking, and administrative control over user data.
 
 ## Features
+- User registration and login using ASP.NET Identity  
+- Role-based authentication and authorization  
+- Add, edit, and delete expenses  
+- Categorize expenses for better organization  
+- Admin dashboard to manage users and monitor activity  
+- Category-wise expense tracking and reporting  
+- Responsive UI for desktop and mobile devices  
 
-- User registration with email confirmation
-- Role-based access control (Admin / User)
-- Add, edit, delete personal expenses by category
-- Admin dashboard to manage all users and expenses
-- Export expense data to PDF using iTextSharp
-- Email notifications via MailKit
-- Token-based password reset (10-minute expiry)
-- Auto-seeding of default Admin account on startup
-- Secure HTTPS with HSTS in production
+## Tech Stack
+- ASP.NET Core MVC  
+- Entity Framework Core  
+- SQL Server  
+- C#  
+- Bootstrap  
+- HTML, CSS, JavaScript  
 
----
+## Screenshots
 
-## Getting Started
+### Admin Dashboard
+![Dashboard](./screenshots/dashboard.png)
 
-### Prerequisites
+### Login Page
+![Login](./screenshots/login.png)
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8)
-- [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-- Visual Studio 2022 or VS Code
+### Expense List
+![Expenses](./screenshots/expenses.png)
 
----
+## How to Run
 
-### Setup Instructions
+1. Clone the repository  
+   git clone https://github.com/supekar-aniket/Expense-Manager.git
 
-**1. Clone the repository**
-```bash
-git clone https://github.com/your-username/ExpenseManager.git
-cd ExpenseManager
-```
+2. Open the project in Visual Studio  
 
-**2. Configure the database connection**
+3. Update the connection string in appsettings.json  
 
-Open `appsettings.json` and update the connection string:
-```json
-"ConnectionStrings": {
-  "ApplicationDBContextConnection": "Server=YOUR_SERVER;Database=ExpenseManager;Trusted_Connection=true;TrustServerCertificate=true"
-}
-```
+4. Apply migrations (if required)  
+   update-database
 
-**3. Configure the Admin account**
+5. Run the application  
 
-In `appsettings.json`, update the default admin credentials:
-```json
-"AdminUser": {
-  "Email": "admin@gmail.com",
-  "Password": "Admin@123",
-  "FirstName": "Your First Name",
-  "LastName": "Your Last Name"
-}
-```
+## Key Concepts Used
+- MVC Architecture  
+- Authentication & Authorization (ASP.NET Identity)  
+- CRUD Operations  
+- Entity Framework Core ORM  
+- Database Design & Normalization  
 
-**4. Configure Email Settings**
-
-```json
-"EmailSettings": {
-  "FromEmail": "your-email@gmail.com",
-  "AppPassword": "your-app-password"
-}
-```
-
-> Use a Gmail App Password (not your actual Gmail password). Generate one from your Google Account → Security → App Passwords.
-
-**5. Apply database migrations**
-```bash
-dotnet ef database update
-```
-
-**6. Run the application**
-```bash
-dotnet run
-```
-
-The app will be available at `https://localhost:5113` (or the port configured in your launchSettings).
-
----
-
-## Project Structure
-
-```
-ExpenseManager/
-├── Areas/
-│   └── Identity/          # ASP.NET Core Identity (login, register, email confirm)
-├── Controllers/           # MVC Controllers
-├── Models/                # Entity models
-├── Views/                 # Razor Views
-├── Helper/                # EmailHelper, UrlHelper, EmailSender
-├── wwwroot/               # Static files (Bootstrap, CSS, JS)
-├── appsettings.json       # App configuration
-└── Program.cs             # App entry point & service registration
-```
-
----
-
-## Default Admin Credentials
-
-> These are seeded automatically on first run from `appsettings.json`.
-
-| Field | Value |
-|---|---|
-| Email | admin@gmail.com |
-| Password | Admin@123 |
-
-> Change these credentials before deploying to production.
-
----
-
-## NuGet Packages Used
-
-| Package | Purpose |
-|---|---|
-| Microsoft.AspNetCore.Identity.EntityFrameworkCore | Identity with EF Core |
-| Microsoft.EntityFrameworkCore.SqlServer | SQL Server provider |
-| MailKit | Email sending |
-| SendGrid | Email delivery service |
-| iTextSharp.LGPLv2.Core | PDF generation |
-| Microsoft.AspNetCore.Identity.UI | Default Identity UI pages |
-
----
+## Future Improvements
+- Add data visualization (charts for expense analysis)  
+- Export reports (PDF/Excel)  
+- API integration for mobile support  
 
 ## Author
-
-**Aniket Supekar**
-MCS Student — GitHub - https://github.com/supekar-aniket
+Aniket Supekar  
+GitHub: https://github.com/supekar-aniket
